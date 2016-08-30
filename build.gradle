@@ -1,0 +1,46 @@
+buildscript {
+    ext.kotlin_version = '1.0.3'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id "edu.sc.seis.macAppBundle" version "2.1.6"
+}
+
+apply plugin: "kotlin"
+apply plugin: "application"
+
+
+mainClassName = 'quantum.QuantumKt'
+
+defaultTasks 'run'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+sourceSets {
+    main.kotlin.srcDirs += 'src'
+    main.resources.srcDirs += 'src'
+}
+
+macAppBundle {
+    mainClassName = "quantum.QuantumKt"
+    icon = "images/QuantumIcon.icns"
+    bundleJRE = true
+    javaProperties.put("apple.laf.useScreenMenuBar", "true")
+    highResolutionCapable = true
+}

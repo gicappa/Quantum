@@ -1,6 +1,5 @@
 package quantum
 
-import com.apple.eawt.Application
 import java.awt.*
 import java.awt.event.KeyEvent
 import java.io.File
@@ -49,12 +48,15 @@ class QuantumApp : JPanel(GridBagLayout()) {
     }
 
     fun run() {
-        val url = ClassLoader.getSystemResource("quantum/quantum.png")
-        val kit = Toolkit.getDefaultToolkit()
-        val img = kit.createImage(url)
-        Application.getApplication().dockIconImage = img
+        // TODO Understand if the code to display the icon is needed
+        // or if it's enough the packaging system
+        //
+        // val url = ClassLoader.getSystemResource("quantum/quantum.png")
+        // val kit = Toolkit.getDefaultToolkit()
+        // val img = kit.createImage(url)
+        // Application.getApplication().dockIconImage = img
+        // frame.iconImage = img
 
-        frame.iconImage = img
         frame.jMenuBar = menuBar
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         frame.background = Color(33, 37, 43, 255)
