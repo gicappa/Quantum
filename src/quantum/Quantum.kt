@@ -84,6 +84,7 @@ class QuantumApp : JPanel(GridBagLayout()) {
     }
 
     fun load() {
+        // TODO separate responsibility: dialog and loading should be separate
         val fileDialog = FileDialog(frame, "Open file", FileDialog.LOAD)
 
         fileDialog.directory = System.getProperty("user.home")
@@ -105,6 +106,7 @@ class QuantumApp : JPanel(GridBagLayout()) {
     }
 
     fun save() {
+        // TODO separate responsibility: dialog and loading should be separate
         val fileDialog = FileDialog(frame, "Save file", FileDialog.SAVE)
 
         fileDialog.directory = System.getProperty("user.home")
