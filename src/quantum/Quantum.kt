@@ -153,7 +153,8 @@ class EditorArea(var content: Content) {
         pane = createScrollPane(editorTextArea)
         constraints = GridBagConstraints()
         constraints.fill = GridBagConstraints.BOTH
-        constraints.anchor = GridBagConstraints.FIRST_LINE_END
+        constraints.weightx = 1.0
+        constraints.weighty = 1.0
         pane.autoscrolls = true
     }
 
