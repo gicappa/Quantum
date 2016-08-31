@@ -152,6 +152,9 @@ class EditorArea(var content: Content) {
         })
         pane = createScrollPane(editorTextArea)
         constraints = GridBagConstraints()
+        constraints.fill = GridBagConstraints.BOTH
+        constraints.anchor = GridBagConstraints.FIRST_LINE_END
+        pane.autoscrolls = true
     }
 
     fun createScrollPane(component: Component): JScrollPane {
