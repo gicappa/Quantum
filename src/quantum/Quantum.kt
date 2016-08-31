@@ -10,7 +10,7 @@ import java.nio.file.Paths
 import javax.swing.*
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
-import javax.swing.text.Document
+import javax.swing.text.*
 
 fun main(args: Array<String>) {
     System.setProperty("apple.laf.useScreenMenuBar", "true")
@@ -63,6 +63,7 @@ class QuantumApp : JPanel(GridBagLayout()) {
         frame.add(this)
         frame.pack()
         frame.isVisible = true
+        frame.setSize(600, 400)
     }
 
     fun createMenuBar(): JMenuBar {
@@ -127,12 +128,12 @@ class Content(var title: String = "untitled",
 
 class EditorArea(var content: Content) {
 
-    var editorTextArea: JTextArea
+    var editorTextArea: JTextPane
     var pane: JScrollPane
     var constraints: GridBagConstraints
 
     init {
-        editorTextArea = createEditorTextArea(25, 80)
+        editorTextArea = createEditorTextPane()
         editorTextArea.document.addDocumentListener(object : DocumentListener {
             override fun changedUpdate(e: DocumentEvent) {
                 update(e.document)
@@ -164,14 +165,32 @@ class EditorArea(var content: Content) {
         return scrollPane
     }
 
-    private fun createEditorTextArea(width: Int, height: Int): JTextArea {
-        val textArea = JTextArea(width, height)
-        textArea.isEditable = true
-        textArea.background = Color(46, 46, 46, 255)
-        textArea.caretColor = Color(82, 139, 255, 255)
-        textArea.autoscrolls = true
-        textArea.foreground = Color(157, 163, 176, 255)
-        return textArea
+    private fun createEditorTextPane(): JTextPane {
+        val pane = JTextPane()
+        pane.isEditable = true
+        pane.background = Color(46, 46, 46, 255)
+        pane.caret = createCaret()
+        pane.caret.blinkRate = 350
+        pane.autoscrolls = true
+        pane.foreground = Color(157, 163, 176, 255)
+        return pane
+    }
+
+    fun createCaret(): Caret {
+
+        return object : DefaultCaret() {
+            override fun paint(g: Graphics) {
+                var comp: JTextComponent = component ?: return
+                try {
+                    val r = comp.modelToView(dot) ?: return
+                    r.width = 3
+                    g.color = Color(82, 139, 255, 255)
+                    if (isVisible) g.fillRect(r.x, r.y, r.width, r.height)
+                } catch (e: BadLocationException) {
+                    return
+                }
+            }
+        }
     }
 
     fun update(newContent: Content) {
